@@ -6,6 +6,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lib.Assertions;
 import lib.BaseTestCase;
+import lib.DataGenerater;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -34,6 +35,27 @@ public class UserRegisterTest extends BaseTestCase {
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "Users with email '" + email + "' already exists");
+    }
+
+    @Test
+    public void testCreateUserSuccessfully(){
+        String email = DataGenerater.getRandomEmail();
+
+        Map<String, String> userDate = new HashMap<>();
+        userDate.put("email", email);
+        userDate.put("password", "1234");
+        userDate.put("username", "learnqa");
+        userDate.put("firstName", "learnqa");
+        userDate.put("lastName", "learnqa");
+
+        Response responseCreateAuth = RestAssured
+                .given()
+                .body(userDate)
+                .post("https://playground.learnqa.ru/api/user/")
+                .andReturn();
+
+        Assertions.assertResponseCodeEquals(responseCreateAuth, 200);
+        Assertions.assertJsonHasField(responseCreateAuth, "id");
     }
 
     @Test
