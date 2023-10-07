@@ -11,6 +11,11 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import org.junit.jupiter.api.DisplayName;
+
 public class UserDeleteTest extends BaseTestCase {
     @Test
     public void testDeleteBlockedUserTest() {
