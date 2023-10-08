@@ -68,8 +68,8 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Get user after delete or edit")
-    public Response makeGetInDeleteRequest(String url, String token, String cookie) {
+    @Step("Get user")
+    public Response makeGet(String url, String token, String cookie) {
         return given()
                 .filter(new AllureRestAssured())
                 .header(new Header("x-csrf-token", token))
@@ -104,6 +104,14 @@ public class ApiCoreRequests {
                 .filter(new AllureRestAssured())
                 .body(editData)
                 .put(url)
+                .andReturn();
+    }
+
+    @Step("Getting a user without authentication")
+    public Response makeGetRequestNotAuth(String url) {
+        return given()
+                .filter(new AllureRestAssured())
+                .get(url)
                 .andReturn();
     }
 }

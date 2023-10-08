@@ -1,6 +1,5 @@
 package tests;
 
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import lib.Assertions;
@@ -76,7 +75,7 @@ public class UserDeleteTest extends BaseTestCase {
 
         //GET
         Response responseUserData = apiCoreRequests
-                .makeGetInDeleteRequest("https://playground.learnqa.ru/api/user/" + userId, this.getHeader(responseGetAuth, "x-csrf-token"),
+                .makeGet("https://playground.learnqa.ru/api/user/" + userId, this.getHeader(responseGetAuth, "x-csrf-token"),
                         this.getCookie(responseGetAuth, "auth_sid"));
 
         Assertions.assertResponseCodeEquals(responseUserData, 404);
