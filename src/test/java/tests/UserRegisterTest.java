@@ -1,6 +1,7 @@
 package tests;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -16,17 +17,16 @@ import lib.ApiCoreRequests;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 
 @Epic("Register user cases")
 @Feature("Register user")
+@Story("User registration task №231")
 public class UserRegisterTest extends BaseTestCase {
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
+    @Owner("Kris")
     @Description("Registering a user with an existing email")
     @DisplayName("Test negative registering. Registering a user with an existing login")
     public void testCreateUserWithExistingEmail(){
@@ -44,6 +44,7 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Owner("Kris")
     @Description("Registering user")
     @DisplayName("Test positive registering")
     public void testCreateUserSuccessfully(){
@@ -59,6 +60,7 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Owner("Kris")
     @Description("Registering user with non-correct email")
     @DisplayName("Test negative registering. Registering user with non-correct email")
     public void testCreateUserWithNotCorrectEmail(){
@@ -79,6 +81,7 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Owner("Kris")
     @Description("Registering user with short name")
     @DisplayName("Test negative registering. Registering user with short name")
     public void testCreateUserWithShortName(){
@@ -99,6 +102,7 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Owner("Kris")
     @Description("Registering user with long name")
     @DisplayName("Test negative registering. Registering user with long name")
     public void testCreateUserWithLongName(){
@@ -119,6 +123,7 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Owner("Kris")
     @Description("Registering user without param")
     @DisplayName("Test negative registering. Registering user without param")
     public void testCreateUserWithNotParam(){

@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import lib.Assertions;
@@ -11,16 +12,15 @@ import lib.ApiCoreRequests;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 
 @Epic("Edit cases")
 @Feature("Edit")
+@Story("User change task №233")
 public class UserEditTest extends BaseTestCase {
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
     @Test
+    @Owner("Kris")
     @Description("Test for successful user change")
     @DisplayName("Test positive edit user. Test for successful user change")
     public void testEditJustCreatedTest(){
@@ -58,6 +58,7 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
+    @Owner("Kris")
     @Description("Test for changing the username by one character")
     @DisplayName("Test negative edit user. Test for changing the username by one character")
     public void testEditJustCreatedTestOneSymbol(){
@@ -91,6 +92,7 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
+    @Owner("Kris")
     @Description("Test for changing a user without authorization")
     @DisplayName("Test negative edit user. Test for changing a user without authorization")
     public void testEditJustCreatedNotAuth(){
@@ -115,6 +117,7 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
+    @Owner("Kris")
     @Description("Test for changing user login without @")
     @DisplayName("Test negative edit user. Test for changing user login without @")
     public void testEditJustCreatedNotRightEmail(){
@@ -148,6 +151,7 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
+    @Owner("Kris")
     @Description("Test to edit another user")
     @DisplayName("Test negative edit user. Test to edit another user")
     public void testEditJustCreatedWithAnotherUser(){

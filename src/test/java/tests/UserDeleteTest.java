@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import lib.Assertions;
@@ -11,17 +12,16 @@ import lib.ApiCoreRequests;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 
 @Epic("Delete cases")
 @Feature("Delete")
+@Story("User deletion task №234")
 public class UserDeleteTest extends BaseTestCase {
 
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
     @Test
+    @Owner("Kris")
     @Description("Test for deleting a non-deletable user")
     @DisplayName("Test negative delete user")
     public void testDeleteBlockedUserTest() {
@@ -45,6 +45,7 @@ public class UserDeleteTest extends BaseTestCase {
     }
 
     @Test
+    @Owner("Kris")
     @Description("Test for successful user deletion")
     @DisplayName("Test positive delete user")
     public void testDeletePositiveTest() {
@@ -83,6 +84,7 @@ public class UserDeleteTest extends BaseTestCase {
     }
 
     @Test
+    @Owner("Kris")
     @Description("Test for deleting someone else's user")
     @DisplayName("Test negative delete user")
     public void testDeleteAnotherUser(){

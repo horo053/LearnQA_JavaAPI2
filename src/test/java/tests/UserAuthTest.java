@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -14,13 +15,11 @@ import lib.ApiCoreRequests;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 
 @Epic("Authorisation cases")
 @Feature("Authorisation")
+@Story("User authorization task №230")
 public class UserAuthTest extends BaseTestCase {
 
     String cookie;
@@ -43,6 +42,7 @@ public class UserAuthTest extends BaseTestCase {
     }
 
     @Test
+    @Owner("Kris")
     @Description("This test successfully authorize user by email and password")
     @DisplayName("Test positive auth user")
     public void testAuthUsers(){
@@ -55,6 +55,7 @@ public class UserAuthTest extends BaseTestCase {
     @Description("This test checks authorization status w/o sending auth cookie or token")
     @DisplayName("Test negative auth user")
     @ParameterizedTest
+    @Owner("Kris")
     @ValueSource(strings = {"cookie", "headers"})
     public void testNegativeAuthUser(String condition){
         if (condition.equals("cookie")){
