@@ -11,12 +11,24 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import lib.ApiCoreRequests;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import org.junit.jupiter.api.DisplayName;
+
+@Epic("Register user cases")
+@Feature("Register user")
 public class UserRegisterTest extends BaseTestCase {
+    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
+
     @Test
+    @Description("Registering a user with an existing email")
+    @DisplayName("Test negative registering. Registering a user with an existing login")
     public void testCreateUserWithExistingEmail(){
         String email = "vinkotov@example.com";
 
@@ -24,33 +36,31 @@ public class UserRegisterTest extends BaseTestCase {
         userDate.put("email", email);
         userDate = DataGenerater.getRegistrationData(userDate);
 
-        Response responseCreateAuth = RestAssured
-                .given()
-                .body(userDate)
-                .post("https://playground.learnqa.ru/api/user/")
-                .andReturn();
+        Response responseCreateAuth = apiCoreRequests
+                .makePostRequestRegisterUser(userDate, "https://playground.learnqa.ru/api/user/");
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "Users with email '" + email + "' already exists");
     }
 
     @Test
+    @Description("Registering user")
+    @DisplayName("Test positive registering")
     public void testCreateUserSuccessfully(){
         String email = DataGenerater.getRandomEmail();
 
         Map<String, String> userDate = DataGenerater.getRegistrationData();
 
-        Response responseCreateAuth = RestAssured
-                .given()
-                .body(userDate)
-                .post("https://playground.learnqa.ru/api/user/")
-                .andReturn();
+        Response responseCreateAuth = apiCoreRequests
+                .makePostRequestRegisterUser(userDate, "https://playground.learnqa.ru/api/user/");
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 200);
         Assertions.assertJsonHasField(responseCreateAuth, "id");
     }
 
     @Test
+    @Description("Registering user with non-correct email")
+    @DisplayName("Test negative registering. Registering user with non-correct email")
     public void testCreateUserWithNotCorrectEmail(){
         String email = "vinkotovexample.com";
 
@@ -61,17 +71,16 @@ public class UserRegisterTest extends BaseTestCase {
         userDate.put("firstName", "learnqa");
         userDate.put("lastName", "learnqa");
 
-        Response responseCreateAuth = RestAssured
-                .given()
-                .body(userDate)
-                .post("https://playground.learnqa.ru/api/user/")
-                .andReturn();
+        Response responseCreateAuth = apiCoreRequests
+                .makePostRequestRegisterUser(userDate, "https://playground.learnqa.ru/api/user/");
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "Invalid email format");
     }
 
     @Test
+    @Description("Registering user with short name")
+    @DisplayName("Test negative registering. Registering user with short name")
     public void testCreateUserWithShortName(){
         String email = "vinkotov@example.com";
 
@@ -82,17 +91,16 @@ public class UserRegisterTest extends BaseTestCase {
         userDate.put("firstName", "l");
         userDate.put("lastName", "learnqa");
 
-        Response responseCreateAuth = RestAssured
-                .given()
-                .body(userDate)
-                .post("https://playground.learnqa.ru/api/user/")
-                .andReturn();
+        Response responseCreateAuth = apiCoreRequests
+                .makePostRequestRegisterUser(userDate, "https://playground.learnqa.ru/api/user/");
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "The value of 'firstName' field is too short");
     }
 
     @Test
+    @Description("Registering user with long name")
+    @DisplayName("Test negative registering. Registering user with long name")
     public void testCreateUserWithLongName(){
         String email = "vinkotov@example.com";
 
@@ -103,26 +111,21 @@ public class UserRegisterTest extends BaseTestCase {
         userDate.put("firstName", "llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll");
         userDate.put("lastName", "learnqa");
 
-        Response responseCreateAuth = RestAssured
-                .given()
-                .body(userDate)
-                .post("https://playground.learnqa.ru/api/user/")
-                .andReturn();
+        Response responseCreateAuth = apiCoreRequests
+                .makePostRequestRegisterUser(userDate, "https://playground.learnqa.ru/api/user/");
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "The value of 'firstName' field is too long");
     }
 
     @Test
+    @Description("Registering user without param")
+    @DisplayName("Test negative registering. Registering user without param")
     public void testCreateUserWithNotParam(){
         Map<String, String> userDate = new HashMap<>();
 
-        Response responseCreateAuth = RestAssured
-                .given()
-                .body(userDate)
-                .post("https://playground.learnqa.ru/api/user/")
-                .andReturn();
-
+        Response responseCreateAuth = apiCoreRequests
+                .makePostRequestRegisterUser(userDate, "https://playground.learnqa.ru/api/user/");
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "The following required params are missed: email, password, username, firstName, lastName");

@@ -114,4 +114,13 @@ public class ApiCoreRequests {
                 .get(url)
                 .andReturn();
     }
+
+    @Step("Register user")
+    public Response makePostRequestRegisterUser(Map<String, String> userData, String url) {
+        return given()
+                .filter(new AllureRestAssured())
+                .body(userData)
+                .post(url)
+                .andReturn();
+    }
 }
